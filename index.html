@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Social Media Post Generator | Create Viral Content</title>
+    <meta name="description" content="Generate stunning social media posts with AI. Create images and captions for Instagram, Facebook, Twitter, and LinkedIn.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-robot"></i>
+                <h1>SocialAI Generator</h1>
+            </div>
+            <div class="nav-stats">
+                <div class="stat">
+                    <span class="stat-number" id="totalPosts">0</span>
+                    <span class="stat-label">Posts Created</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h2 class="hero-title">Create <span class="gradient-text">Viral Social Media Posts</span> in Seconds</h2>
+                    <p class="hero-description">AI-powered content creation for Instagram, Facebook, Twitter, and LinkedIn. No design skills needed.</p>
+                </div>
+            </section>
+
+            <!-- App Grid -->
+            <div class="app-grid">
+                <!-- Input Panel -->
+                <div class="panel input-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-magic"></i>
+                        <h3>Create Your Post</h3>
+                    </div>
+
+                    <form id="postForm" class="form">
+                        <!-- Topic Input -->
+                        <div class="form-group">
+                            <label for="topic" class="form-label">
+                                <i class="fas fa-lightbulb"></i>
+                                What's your post about?
+                            </label>
+                            <input 
+                                type="text" 
+                                id="topic" 
+                                class="form-input"
+                                placeholder="e.g., Morning motivation, Product launch, Fitness tips..."
+                                required
+                            >
+                            <div class="quick-topics">
+                                <button type="button" class="topic-chip" data-topic="Morning motivation and success mindset">🌅 Motivation</button>
+                                <button type="button" class="topic-chip" data-topic="Fitness and healthy lifestyle tips">💪 Fitness</button>
+                                <button type="button" class="topic-chip" data-topic="Technology trends and AI updates">🤖 Tech</button>
+                                <button type="button" class="topic-chip" data-topic="Business growth and entrepreneurship">🚀 Business</button>
+                            </div>
+                        </div>
+
+                        <!-- Platform Selection -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-mobile-alt"></i>
+                                Select Platform
+                            </label>
+                            <div class="platform-grid">
+                                <div class="platform-card active" data-platform="instagram">
+                                    <div class="platform-icon">
+                                        <i class="fab fa-instagram"></i>
+                                    </div>
+                                    <span class="platform-name">Instagram</span>
+                                </div>
+                                <div class="platform-card" data-platform="facebook">
+                                    <div class="platform-icon">
+                                        <i class="fab fa-facebook"></i>
+                                    </div>
+                                    <span class="platform-name">Facebook</span>
+                                </div>
+                                <div class="platform-card" data-platform="twitter">
+                                    <div class="platform-icon">
+                                        <i class="fab fa-twitter"></i>
+                                    </div>
+                                    <span class="platform-name">Twitter</span>
+                                </div>
+                                <div class="platform-card" data-platform="linkedin">
+                                    <div class="platform-icon">
+                                        <i class="fab fa-linkedin"></i>
+                                    </div>
+                                    <span class="platform-name">LinkedIn</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tone Selection -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-palette"></i>
+                                Content Tone
+                            </label>
+                            <div class="tone-grid">
+                                <div class="tone-card active" data-tone="inspirational">
+                                    <i class="fas fa-star"></i>
+                                    <span>Inspirational</span>
+                                </div>
+                                <div class="tone-card" data-tone="professional">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>Professional</span>
+                                </div>
+                                <div class="tone-card" data-tone="casual">
+                                    <i class="fas fa-smile"></i>
+                                    <span>Casual</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Custom Instructions -->
+                        <div class="form-group">
+                            <label for="instructions" class="form-label">
+                                <i class="fas fa-edit"></i>
+                                Additional Instructions (Optional)
+                            </label>
+                            <textarea 
+                                id="instructions" 
+                                class="form-textarea"
+                                placeholder="Any specific requirements? e.g., Include hashtags, mention specific features, call-to-action..."
+                                rows="3"
+                            ></textarea>
+                        </div>
+
+                        <!-- Generate Button -->
+                        <button type="submit" class="generate-btn" id="generateBtn">
+                            <i class="fas fa-bolt"></i>
+                            Generate Post
+                            <span class="btn-loading" id="btnLoading">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Output Panel -->
+                <div class="panel output-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-rocket"></i>
+                        <h3>Your Generated Post</h3>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div class="loading-state" id="loadingState">
+                        <div class="loading-animation">
+                            <div class="loading-spinner"></div>
+                            <div class="loading-pulse"></div>
+                        </div>
+                        <div class="loading-content">
+                            <h4>Creating Your Amazing Post</h4>
+                            <p>Our AI is generating your image and writing the perfect caption...</p>
+                            <div class="loading-steps">
+                                <div class="loading-step active">
+                                    <i class="fas fa-check"></i>
+                                    <span>Processing your request</span>
+                                </div>
+                                <div class="loading-step" id="stepImage">
+                                    <i class="fas fa-image"></i>
+                                    <span>Generating image</span>
+                                </div>
+                                <div class="loading-step" id="stepCaption">
+                                    <i class="fas fa-pen"></i>
+                                    <span>Writing caption</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result State -->
+                    <div class="result-state" id="resultState">
+                        <div class="generated-image-container">
+                            <img id="generatedImage" class="generated-image" alt="Generated Social Media Post">
+                            <div class="image-overlay">
+                                <button class="icon-btn" onclick="downloadImage()" title="Download Image">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="icon-btn" onclick="refreshImage()" title="Generate New Image">
+                                    <i class="fas fa-sync"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="caption-container">
+                            <div class="caption-header">
+                                <h4>
+                                    <i class="fas fa-quote-left"></i>
+                                    Post Caption
+                                </h4>
+                                <button class="copy-btn" onclick="copyCaption()" title="Copy to Clipboard">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <div class="caption-content">
+                                <p id="generatedCaption"></p>
+                            </div>
+                            <div class="caption-actions">
+                                <button class="action-btn secondary" onclick="regenerateCaption()">
+                                    <i class="fas fa-redo"></i>
+                                    Rewrite Caption
+                                </button>
+                                <button class="action-btn primary" onclick="sharePost()">
+                                    <i class="fas fa-share"></i>
+                                    Share Post
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Welcome State -->
+                    <div class="welcome-state" id="welcomeState">
+                        <div class="welcome-content">
+                            <div class="welcome-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h4>Your Post Awaits</h4>
+                            <p>Fill in the details and generate stunning social media content powered by AI.</p>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>Fast Generation</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-paint-brush"></i>
+                                    <span>Multiple Platforms</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-download"></i>
+                                    <span>Easy Download</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <section class="features">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h4>AI-Powered</h4>
+                        <p>Advanced AI generates unique images and engaging captions</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h4>Save Time</h4>
+                        <p>Create content in seconds instead of hours</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-screen"></i>
+                        </div>
+                        <h4>Platform Optimized</h4>
+                        <p>Tailored for Instagram, Facebook, Twitter & LinkedIn</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 SocialAI Generator. Powered by Advanced AI Technology.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+                              </html>
