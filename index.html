@@ -5,11 +5,474 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Social Media Post Generator | Create Viral Content</title>
     <meta name="description" content="Generate stunning social media posts with AI. Create images and captions for Instagram, Facebook, Twitter, and LinkedIn.">
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- INLINE CSS -->
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --dark: #1f2937;
+            --darker: #111827;
+            --light: #f8fafc;
+            --lighter: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #9ca3af;
+            --gray-lighter: #e5e7eb;
+            --border: #e5e7eb;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+        }
+
+        .nav-brand i {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-brand h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nav-stats .stat {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main {
+            padding: 2rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* App Grid */
+        .app-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Panels */
+        .panel {
+            background: var(--lighter);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+        }
+
+        .panel-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .panel-header i {
+            font-size: 1.5rem;
+        }
+
+        .panel-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Form Styles */
+        .form {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .form-label i {
+            color: var(--primary);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--lighter);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Quick Topics */
+        .quick-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 0.75rem;
+        }
+
+        .topic-chip {
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--dark);
+            border: none;
+        }
+
+        .topic-chip:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Platform Grid */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 0.75rem;
+        }
+
+        .platform-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .platform-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .platform-card.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .platform-icon {
+            font-size: 1.5rem;
+        }
+
+        .platform-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Tone Grid */
+        .tone-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 0.75rem;
+        }
+
+        .tone-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .tone-card:hover {
+            border-color: var(--secondary);
+        }
+
+        .tone-card.active {
+            border-color: var(--secondary);
+            background: var(--secondary);
+            color: white;
+        }
+
+        .tone-card i {
+            font-size: 1.25rem;
+        }
+
+        /* Generate Button */
+        .generate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+        }
+
+        .generate-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-loading {
+            display: none;
+        }
+
+        .generate-btn.loading .btn-loading {
+            display: block;
+        }
+
+        .generate-btn.loading .btn-text {
+            opacity: 0.7;
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--gray-lighter);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Result State */
+        .generated-image {
+            width: 100%;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+        }
+
+        .caption-content {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+        }
+
+        .caption-content p {
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .action-btn {
+            padding: 12px 16px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .action-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 1px solid var(--border);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .platform-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tone-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -48,7 +511,7 @@
                         <h3>Create Your Post</h3>
                     </div>
 
-                    <form id="postForm" class="form">
+                    <form class="form" id="postForm">
                         <!-- Topic Input -->
                         <div class="form-group">
                             <label for="topic" class="form-label">
@@ -63,10 +526,9 @@
                                 required
                             >
                             <div class="quick-topics">
-                                <button type="button" class="topic-chip" data-topic="Morning motivation and success mindset">🌅 Motivation</button>
-                                <button type="button" class="topic-chip" data-topic="Fitness and healthy lifestyle tips">💪 Fitness</button>
-                                <button type="button" class="topic-chip" data-topic="Technology trends and AI updates">🤖 Tech</button>
-                                <button type="button" class="topic-chip" data-topic="Business growth and entrepreneurship">🚀 Business</button>
+                                <button type="button" class="topic-chip" data-topic="Morning motivation">🌅 Motivation</button>
+                                <button type="button" class="topic-chip" data-topic="Fitness tips">💪 Fitness</button>
+                                <button type="button" class="topic-chip" data-topic="Technology trends">🤖 Tech</button>
                             </div>
                         </div>
 
@@ -126,25 +588,10 @@
                             </div>
                         </div>
 
-                        <!-- Custom Instructions -->
-                        <div class="form-group">
-                            <label for="instructions" class="form-label">
-                                <i class="fas fa-edit"></i>
-                                Additional Instructions (Optional)
-                            </label>
-                            <textarea 
-                                id="instructions" 
-                                class="form-textarea"
-                                placeholder="Any specific requirements? e.g., Include hashtags, mention specific features, call-to-action..."
-                                rows="3"
-                            ></textarea>
-                        </div>
-
-                        <!-- Generate Button -->
                         <button type="submit" class="generate-btn" id="generateBtn">
                             <i class="fas fa-bolt"></i>
-                            Generate Post
-                            <span class="btn-loading" id="btnLoading">
+                            <span class="btn-text">Generate Post</span>
+                            <span class="btn-loading">
                                 <i class="fas fa-spinner fa-spin"></i>
                             </span>
                         </button>
@@ -158,138 +605,122 @@
                         <h3>Your Generated Post</h3>
                     </div>
 
-                    <!-- Loading State -->
-                    <div class="loading-state" id="loadingState">
-                        <div class="loading-animation">
+                    <div class="form">
+                        <!-- Loading State -->
+                        <div class="loading-state hidden" id="loadingState">
                             <div class="loading-spinner"></div>
-                            <div class="loading-pulse"></div>
+                            <p style="text-align: center;">Creating your amazing post...</p>
                         </div>
-                        <div class="loading-content">
-                            <h4>Creating Your Amazing Post</h4>
-                            <p>Our AI is generating your image and writing the perfect caption...</p>
-                            <div class="loading-steps">
-                                <div class="loading-step active">
-                                    <i class="fas fa-check"></i>
-                                    <span>Processing your request</span>
-                                </div>
-                                <div class="loading-step" id="stepImage">
-                                    <i class="fas fa-image"></i>
-                                    <span>Generating image</span>
-                                </div>
-                                <div class="loading-step" id="stepCaption">
-                                    <i class="fas fa-pen"></i>
-                                    <span>Writing caption</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Result State -->
-                    <div class="result-state" id="resultState">
-                        <div class="generated-image-container">
+                        <!-- Result State -->
+                        <div class="result-state hidden" id="resultState">
                             <img id="generatedImage" class="generated-image" alt="Generated Social Media Post">
-                            <div class="image-overlay">
-                                <button class="icon-btn" onclick="downloadImage()" title="Download Image">
-                                    <i class="fas fa-download"></i>
-                                </button>
-                                <button class="icon-btn" onclick="refreshImage()" title="Generate New Image">
-                                    <i class="fas fa-sync"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="caption-container">
-                            <div class="caption-header">
-                                <h4>
-                                    <i class="fas fa-quote-left"></i>
-                                    Post Caption
-                                </h4>
-                                <button class="copy-btn" onclick="copyCaption()" title="Copy to Clipboard">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </div>
+                            
                             <div class="caption-content">
                                 <p id="generatedCaption"></p>
                             </div>
-                            <div class="caption-actions">
+
+                            <div class="action-buttons">
                                 <button class="action-btn secondary" onclick="regenerateCaption()">
                                     <i class="fas fa-redo"></i>
                                     Rewrite Caption
                                 </button>
-                                <button class="action-btn primary" onclick="sharePost()">
-                                    <i class="fas fa-share"></i>
-                                    Share Post
+                                <button class="action-btn primary" onclick="downloadImage()">
+                                    <i class="fas fa-download"></i>
+                                    Download
                                 </button>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Welcome State -->
-                    <div class="welcome-state" id="welcomeState">
-                        <div class="welcome-content">
-                            <div class="welcome-icon">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                            </div>
-                            <h4>Your Post Awaits</h4>
-                            <p>Fill in the details and generate stunning social media content powered by AI.</p>
-                            <div class="feature-list">
-                                <div class="feature-item">
-                                    <i class="fas fa-bolt"></i>
-                                    <span>Fast Generation</span>
-                                </div>
-                                <div class="feature-item">
-                                    <i class="fas fa-paint-brush"></i>
-                                    <span>Multiple Platforms</span>
-                                </div>
-                                <div class="feature-item">
-                                    <i class="fas fa-download"></i>
-                                    <span>Easy Download</span>
-                                </div>
+                        <!-- Welcome State -->
+                        <div class="welcome-state" id="welcomeState">
+                            <div style="text-align: center; padding: 40px 20px; color: var(--gray);">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 4rem; margin-bottom: 20px; color: #e5e7eb;"></i>
+                                <h3>Your Post Awaits</h3>
+                                <p>Fill in the details and generate stunning social media content!</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Features Section -->
-            <section class="features">
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-wand-magic-sparkles"></i>
-                        </div>
-                        <h4>AI-Powered</h4>
-                        <p>Advanced AI generates unique images and engaging captions</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <h4>Save Time</h4>
-                        <p>Create content in seconds instead of hours</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-mobile-screen"></i>
-                        </div>
-                        <h4>Platform Optimized</h4>
-                        <p>Tailored for Instagram, Facebook, Twitter & LinkedIn</p>
-                    </div>
-                </div>
-            </section>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 SocialAI Generator. Powered by Advanced AI Technology.</p>
-        </div>
-    </footer>
+    <script>
+        // Simple JavaScript for basic functionality
+        document.getElementById('postForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const topic = document.getElementById('topic').value;
+            const generateBtn = document.getElementById('generateBtn');
+            const loadingState = document.getElementById('loadingState');
+            const resultState = document.getElementById('resultState');
+            const welcomeState = document.getElementById('welcomeState');
+            
+            if (!topic) {
+                alert('Please enter a topic!');
+                return;
+            }
 
-    <!-- Toast Notifications -->
-    <div id="toast" class="toast"></div>
+            // Show loading
+            generateBtn.classList.add('loading');
+            loadingState.classList.remove('hidden');
+            resultState.classList.add('hidden');
+            welcomeState.classList.add('hidden');
 
-    <script src="script.js"></script>
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Mock response
+                document.getElementById('generatedImage').src = `https://picsum.photos/600/400?random=${Date.now()}`;
+                document.getElementById('generatedCaption').textContent = `🌟 Amazing post about ${topic}!\n\nThis is AI-generated content!\n\n#${topic.replace(/\s+/g, '')} #AI #SocialMedia`;
+                
+                // Show result
+                loadingState.classList.add('hidden');
+                resultState.classList.remove('hidden');
+                
+            } catch (error) {
+                alert('Error generating post: ' + error.message);
+            } finally {
+                generateBtn.classList.remove('loading');
+            }
+        });
+
+        // Platform selection
+        document.querySelectorAll('.platform-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.platform-card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Tone selection
+        document.querySelectorAll('.tone-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.tone-card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Quick topics
+        document.querySelectorAll('.topic-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                document.getElementById('topic').value = this.dataset.topic;
+            });
+        });
+
+        function regenerateCaption() {
+            alert('Caption regeneration feature!');
+        }
+
+        function downloadImage() {
+            const imageUrl = document.getElementById('generatedImage').src;
+            const a = document.createElement('a');
+            a.href = imageUrl;
+            a.download = 'social-media-post.png';
+            a.click();
+        }
+    </script>
 </body>
-                              </html>
+</html>
