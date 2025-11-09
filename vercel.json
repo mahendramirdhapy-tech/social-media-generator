@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "name": "social-media-generator",
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "HUGGINGFACE_TOKEN": "@huggingface-token",
+    "OPENROUTER_API_KEY": "@openrouter-api-key",
+    "SITE_URL": "https://your-app.vercel.app"
+  }
+}
